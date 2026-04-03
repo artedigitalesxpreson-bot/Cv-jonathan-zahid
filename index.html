@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jonathan Zahid — Diseñador Creativo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0d0d;
+    --paper: #f5f0e8;
+    --accent: #e63b2e;
+    --accent2: #1a1a2e;
+    --muted: #7a7570;
+    --line: rgba(13,13,13,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.5;
+  }
+  .page { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 72px 0 56px;
+    border-bottom: 1.5px solid var(--ink);
+    overflow: hidden;
+  }
+  .hero-bg-text {
+    position: absolute;
+    top: -10px; right: -20px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(120px, 20vw, 220px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(13,13,13,0.07);
+    line-height: 1;
+    pointer-events: none; user-select: none;
+  }
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+    opacity: 0; animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 11vw, 128px);
+    line-height: 0.9; letter-spacing: 0.01em;
+    opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards;
+  }
+  .hero-name .accent { color: var(--accent); }
+  .hero-title {
+    margin-top: 20px; font-size: 15px; font-weight: 400;
+    color: var(--muted); max-width: 460px;
+    opacity: 0; animation: fadeUp 0.7s ease 0.35s forwards;
+  }
+  .hero-contact {
+    display: flex; flex-wrap: wrap; gap: 20px; margin-top: 32px;
+    opacity: 0; animation: fadeUp 0.7s ease 0.5s forwards;
+  }
+  .hero-contact a, .hero-contact span {
+    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ink);
+    text-decoration: none; display: flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .hero-contact a:hover { color: var(--accent); }
+  .hero-contact .dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); flex-shrink: 0;
+  }
+
+  /* GRID */
+  .body-grid { display: grid; grid-template-columns: 1fr 300px; gap: 0; align-items: start; }
+  .main-col { border-right: 1.5px solid var(--line); padding-right: 48px; }
+  .side-col { padding-left: 40px; }
+
+  /* SECTION */
+  .section { padding-top: 52px; opacity: 0; animation: fadeUp 0.7s ease forwards; }
+  .section:nth-child(1) { animation-delay: 0.6s; }
+  .section:nth-child(2) { animation-delay: 0.7s; }
+  .section:nth-child(3) { animation-delay: 0.8s; }
+  .section:nth-child(4) { animation-delay: 0.9s; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
+  /* PERFIL */
+  .perfil-text { font-size: 15.5px; line-height: 1.75; color: #2a2a2a; max-width: 520px; }
+  .perfil-text strong { color: var(--ink); font-weight: 500; }
+
+  /* OBJETIVO */
+  .objetivo-block { border-left: 3px solid var(--accent); padding-left: 20px; margin-top: 8px; }
+  .objetivo-block p { font-size: 14px; line-height: 1.7; color: #3a3a3a; font-style: italic; }
+
+  /* EXPERIENCIA */
+  .exp-item { position: relative; padding-bottom: 36px; }
+  .exp-item::before {
+    content: ''; position: absolute; left: -20px; top: 8px;
+    width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+  }
+  .exp-item::after {
+    content: ''; position: absolute; left: -18px; top: 18px;
+    width: 2px; height: calc(100% - 18px); background: var(--line);
+  }
+  .exp-item:last-child::after { display: none; }
+  .exp-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .exp-role { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.03em; color: var(--ink); }
+  .exp-year { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); white-space: nowrap; }
+  .exp-company { font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .exp-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .exp-list li { font-size: 13.5px; color: #3a3a3a; padding-left: 16px; position: relative; }
+  .exp-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 11px; }
+
+  /* SIDEBAR */
+  .side-section { padding-top: 52px; opacity: 0; animation: fadeUp 0.7s ease forwards; }
+  .side-section:nth-child(1) { animation-delay: 0.65s; }
+  .side-section:nth-child(2) { animation-delay: 0.75s; }
+  .side-section:nth-child(3) { animation-delay: 0.85s; }
+  .side-section:nth-child(4) { animation-delay: 0.95s; }
+  .side-section:nth-child(5) { animation-delay: 1.05s; }
+
+  /* SKILLS */
+  .skill-tag {
+    display: inline-block; font-family: 'DM Mono', monospace; font-size: 11px;
+    padding: 5px 11px; border: 1px solid var(--ink);
+    margin: 4px 4px 0 0; transition: all 0.2s; cursor: default;
+  }
+  .skill-tag:hover { background: var(--ink); color: var(--paper); }
+  .skill-tag.highlight { background: var(--accent); border-color: var(--accent); color: white; }
+
+  /* TOOLS */
+  .tools-category { margin-bottom: 20px; }
+  .tools-cat-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .tools-list { display: flex; flex-wrap: wrap; gap: 4px; }
+  .tool-pill { font-size: 11.5px; font-weight: 400; padding: 3px 10px; background: rgba(13,13,13,0.05); border-radius: 2px; transition: background 0.2s; cursor: default; }
+  .tool-pill:hover { background: rgba(13,13,13,0.12); }
+
+  /* IDIOMAS */
+  .lang-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .lang-name { font-size: 13px; font-weight: 500; }
+  .lang-level { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* VALOR */
+  .valor-box { background: var(--ink); color: var(--paper); padding: 20px; margin-top: 8px; }
+  .valor-box p { font-size: 12.5px; line-height: 1.65; }
+  .valor-box strong { color: var(--accent); font-weight: 500; }
+
+  /* FORMACIÓN */
+  .formation-item { font-size: 13px; padding: 8px 0; border-bottom: 1px solid var(--line); line-height: 1.5; }
+
+  /* FOOTER */
+  .footer { border-top: 1.5px solid var(--ink); margin-top: 60px; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
+  .footer-tag { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.05em; color: var(--ink); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media print {
+    body::before { display: none; }
+    .hero-bg-text { display: none; }
+    .section, .side-section, .hero-label, .hero-name, .hero-title, .hero-contact { opacity: 1 !important; animation: none !important; }
+  }
+
+  @media (max-width: 700px) {
+    .body-grid { grid-template-columns: 1fr; }
+    .main-col { border-right: none; padding-right: 0; border-bottom: 1.5px solid var(--line); padding-bottom: 32px; }
+    .side-col { padding-left: 0; }
+    .exp-item::before, .exp-item::after { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="hero">
+    <div class="hero-bg-text">JZ</div>
+    <div class="hero-label">CV — Diseñador Creativo · Brand Manager Jr</div>
+    <h1 class="hero-name">Jonathan<br><span class="accent">Zahid</span></h1>
+    <p class="hero-title">Diseñador Creativo · Branding · Contenido Digital · Estrategia Visual</p>
+    <div class="hero-contact">
+      <span><span class="dot"></span>Venustiano Carranza, Chiapas, México</span>
+      <a href="tel:+529921135132"><span class="dot"></span>+52 992 113 5132</a>
+      <a href="mailto:jonathan13zahid@gmail.com"><span class="dot"></span>jonathan13zahid@gmail.com</a>
+      <a href="https://techandstyle.online" target="_blank"><span class="dot"></span>techandstyle.online</a>
+    </div>
+  </header>
+
+  <div class="body-grid">
+
+    <div class="main-col">
+
+      <section class="section">
+        <div class="section-label">Perfil Profesional</div>
+        <p class="perfil-text">
+          Profesional creativo especializado en <strong>branding, diseño visual y marketing digital</strong>,
+          con experiencia en la creación de contenido estratégico orientado a conversión.
+          Combino habilidades en diseño gráfico, edición multimedia y desarrollo web básico
+          para construir <strong>identidades de marca sólidas</strong> y experiencias digitales atractivas.<br><br>
+          He desarrollado proyectos editoriales propios y estrategias de contenido enfocadas
+          en productos tecnológicos y lifestyle, integrando creatividad, análisis y tendencias del mercado.
+        </p>
+      </section>
+
+      <section class="section">
+        <div class="section-label">Objetivo Profesional</div>
+        <div class="objetivo-block">
+          <p>Convertirme en un profesional integral en tecnología, combinando soporte técnico y diseño digital para implementar soluciones completas que mejoren tanto la operación como la imagen de la empresa.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-label">Experiencia &amp; Proyectos</div>
+        <div style="padding-left: 20px;">
+
+          <div class="exp-item">
+            <div class="exp-meta">
+              <span class="exp-role">Creador de Contenido &amp; Proyectos Editoriales</span>
+              <span class="exp-year">2024 — Actualidad</span>
+            </div>
+            <div class="exp-company">Independiente</div>
+            <ul class="exp-list">
+              <li>Desarrollo de revistas digitales propias, desde conceptualización hasta publicación</li>
+              <li>Creación de contenido visual y editorial alineado a identidad de marca</li>
+              <li>Diseño de layouts, tipografía y estructura visual profesional</li>
+              <li>Aplicación de principios de marketing visual para captar audiencia</li>
+            </ul>
+          </div>
+
+          <div class="exp-item">
+            <div class="exp-meta">
+              <span class="exp-role">Blog Tech &amp; Style</span>
+              <span class="exp-year">2025</span>
+            </div>
+            <div class="exp-company"><a href="https://techandstyle.online" target="_blank" style="color:var(--muted);text-decoration:none;">techandstyle.online</a></div>
+            <ul class="exp-list">
+              <li>Creación y desarrollo de blog enfocado en tecnología y estilo de vida</li>
+              <li>Diseño de contenido optimizado para SEO y experiencia de usuario</li>
+              <li>Desarrollo visual y estructural del sitio web desde cero</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-label">Competencias Clave</div>
+        <ul class="exp-list" style="padding-left:0;">
+          <li>Desarrollo de identidad de marca coherente</li>
+          <li>Creación de contenido visual estratégico</li>
+          <li>Gestión de proyectos creativos de inicio a fin</li>
+          <li>Optimización de contenido para marketing digital</li>
+          <li>Análisis básico de métricas y comportamiento del usuario</li>
+          <li>Adaptación rápida a nuevas herramientas digitales</li>
+        </ul>
+      </section>
+
+    </div>
+
+    <div class="side-col">
+
+      <div class="side-section">
+        <div class="section-label">Habilidades</div>
+        <div>
+          <span class="skill-tag highlight">Branding</span>
+          <span class="skill-tag highlight">Identidad Visual</span>
+          <span class="skill-tag">Diseño Gráfico</span>
+          <span class="skill-tag">Marketing Digital</span>
+          <span class="skill-tag">Copywriting</span>
+          <span class="skill-tag">Storytelling</span>
+          <span class="skill-tag">Edición de Video</span>
+          <span class="skill-tag">Diseño Editorial</span>
+          <span class="skill-tag highlight">3D / Blender</span>
+          <span class="skill-tag">HTML / CSS / JS</span>
+          <span class="skill-tag">Redes Sociales</span>
+          <span class="skill-tag">Investigación de Tendencias</span>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <div class="section-label">Software &amp; Herramientas</div>
+
+        <div class="tools-category">
+          <div class="tools-cat-label">Diseño &amp; Branding</div>
+          <div class="tools-list">
+            <span class="tool-pill">Photoshop</span>
+            <span class="tool-pill">Figma</span>
+            <span class="tool-pill">Inkscape</span>
+            <span class="tool-pill">GIMP</span>
+          </div>
+        </div>
+
+        <div class="tools-category">
+          <div class="tools-cat-label">Video &amp; Multimedia</div>
+          <div class="tools-list">
+            <span class="tool-pill">Premiere Pro</span>
+            <span class="tool-pill">CapCut</span>
+          </div>
+        </div>
+
+        <div class="tools-category">
+          <div class="tools-cat-label">Fotografía RAW</div>
+          <div class="tools-list">
+            <span class="tool-pill">Darktable</span>
+            <span class="tool-pill">RawTherapee</span>
+          </div>
+        </div>
+
+        <div class="tools-category">
+          <div class="tools-cat-label">Editorial &amp; 3D</div>
+          <div class="tools-list">
+            <span class="tool-pill">Scribus</span>
+            <span class="tool-pill">Blender</span>
+          </div>
+        </div>
+
+        <div class="tools-category">
+          <div class="tools-cat-label">Web &amp; Ofimática</div>
+          <div class="tools-list">
+            <span class="tool-pill">HTML</span>
+            <span class="tool-pill">CSS</span>
+            <span class="tool-pill">JavaScript</span>
+            <span class="tool-pill">Word</span>
+            <span class="tool-pill">Excel</span>
+            <span class="tool-pill">PowerPoint</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <div class="section-label">Formación</div>
+        <div class="formation-item">Formación autodidacta en diseño gráfico, marketing digital y desarrollo web</div>
+        <div class="formation-item">Cursos online en diseño, branding y herramientas digitales</div>
+      </div>
+
+      <div class="side-section">
+        <div class="section-label">Idiomas</div>
+        <div class="lang-item">
+          <span class="lang-name">Español</span>
+          <span class="lang-level">Nativo</span>
+        </div>
+      </div>
+
+      <div class="side-section">
+        <div class="section-label">Valor Diferencial</div>
+        <div class="valor-box">
+          <p>Perfil <strong>híbrido</strong> que integra creatividad, estrategia y tecnología — capaz de desarrollar desde la identidad visual hasta la <strong>ejecución de campañas digitales completas</strong>.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span class="footer-copy">© 2025 Jonathan Zahid · Diseñador Creativo</span>
+    <span class="footer-tag">jonathan13zahid@gmail.com</span>
+  </footer>
+
+</div>
+</body>
+</html>
